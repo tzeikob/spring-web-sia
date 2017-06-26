@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Dokument Page</title>
+        <link rel="stylesheet"
+              type="text/css"
+              th:href="@{/assets/css/style.css}"/>
+    </head>
+    <body>
+        <span sec:authorize="isAuthenticated()">
+            <span>Hi there, <span sec:authentication="name">username</span>!</span>
+            &nbsp;
+        </span>
+        <a th:href="@{/}">Home</a>&nbsp;
+        <span sec:authorize-url="/a/persons">
+            <a th:href="@{/a/persons}">Persons</a>&nbsp;
+        </span>
+        <span sec:authorize-url="/a/register">
+            <a th:href="@{/a/register}">Registration</a>&nbsp;
+        </span>
+        <span sec:authorize-url="/c/dokuments">
+            <a th:href="@{/c/dokuments}">Dokuments</a>&nbsp;
+        </span>
+        <span sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Logout</a>
+        </span>
+
+        <h1>Dokument Profile</h1>
+        <div th:unless="${dokument == null}">
+            ID: <span th:text="${dokument.id}">Id</span><br/>
+            Title: <span th:text="${dokument.title}">Title</span><br/>
+            Author: <span th:text="${dokument.author}">Author</span><br/>
+            Comments:
+            <ul>
+                <li th:each="comment : ${dokument.comments}">
+                    <span th:text="${comment.message}">Message comment</span>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Dokuments Page</title>
+        <link rel="stylesheet"
+              type="text/css"
+              th:href="@{/assets/css/style.css}"/>
+    </head>
+    <body>
+        <span sec:authorize="isAuthenticated()">
+            <span>Hi there, <span sec:authentication="name">username</span>!</span>
+            &nbsp;
+        </span>
+        <a th:href="@{/}">Home</a>&nbsp;
+        <span sec:authorize-url="/a/persons">
+            <a th:href="@{/a/persons}">Persons</a>&nbsp;
+        </span>
+        <span sec:authorize-url="/a/register">
+            <a th:href="@{/a/register}">Registration</a>&nbsp;
+        </span>
+        <span sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Logout</a>
+        </span>
+
+        <table>
+            <th>
+                <tr>
+                    <td>ID</td>
+                    <td>Title</td>
+                    <td>Author</td>
+                    <td>Comments</td>
+                    <td>Actions</td>
+                </tr>
+            </th>
+            <tr th:each="dokument : ${dokuments}">
+                <td th:text="${dokument.id}">ID</td>
+                <td>
+                    <a th:text="${dokument.title}"
+                       th:href="@{/c/dokuments/} + ${dokument.title}">Title</a>
+                </td>
+                <td th:text="${dokument.author}">Author</td>
+                <td th:text="${#lists.size(dokument.comments)}">66</td>
+                <td>
+                    <a sec:authorize="hasRole('ADMIN')"
+                       th:href="@{/c/delete/} + ${dokument.id}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

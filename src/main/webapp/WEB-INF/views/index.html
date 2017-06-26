@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+        <title th:text="#{index.view.title}"/>
+        <link rel="stylesheet"
+              type="text/css"
+              th:href="@{/assets/css/style.css}"/>
+    </head>
+    <body>
+        <span sec:authorize="isAuthenticated()">
+            <span>Hi there, <span sec:authentication="name">username</span>!</span>
+            &nbsp;
+        </span>
+        <span sec:authorize-url="/a/persons">
+            <a th:href="@{/a/persons}">Persons</a>&nbsp;
+        </span>
+        <span sec:authorize-url="/a/register">
+            <a th:href="@{/a/register}">Registration</a>&nbsp;
+        </span>
+        <span sec:authorize-url="/c/dokuments">
+            <a th:href="@{/c/dokuments}">Dokuments</a>&nbsp;
+        </span>
+        <span sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Logout</a>
+        </span>
+
+        <h1 th:text="#{index.view.wellcome.message}"/>
+        
+        <div sec:authorize="not isAuthenticated()">
+            <form th:action="@{/login}" method="POST">
+                <table>
+                    <tr>
+                        <td><label>Username</label></td>
+                        <td><input type="text" th:name="username"/></td>
+                    </tr>
+                    <tr>
+                        <td><label>Password</label></td>
+                        <td><input type="password" th:name="password" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Login" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" th:name="remember-me" />
+                            <label class="inline">Remember me</label>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        
+        <p sec:authorize="isAuthenticated()">
+            Please feel free and use our services!
+        </p>
+    </body>
+</html>

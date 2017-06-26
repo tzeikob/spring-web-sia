@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Person Registration Page</title>
+        <link rel="stylesheet"
+              type="text/css"
+              th:href="@{/assets/css/style.css}"/>
+    </head>
+    <body>
+        <span sec:authorize="isAuthenticated()">
+            <span>Hi there, <span sec:authentication="name">username</span>!</span>
+            &nbsp;
+        </span>
+        <a th:href="@{/}">Home</a>&nbsp;
+        <span sec:authorize-url="/a/persons">
+            <a th:href="@{/a/persons}">Persons</a>&nbsp;
+        </span>
+        <span sec:authorize-url="/c/dokuments">
+            <a th:href="@{/c/dokuments}">Dokuments</a>&nbsp;
+        </span>
+        <span sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Logout</a>
+        </span>
+
+        <h1>Register Person</h1>
+        <form th:action="@{/a/register(${_csrf.parameterName}=${_csrf.token})}"
+              th:object="${person}"
+              method="POST"
+              enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <td><label th:class="${#fields.hasErrors('name')}? 'error'">Name</label></td>
+                    <td><input type="text"
+                               th:field="*{name}"
+                               th:class="${#fields.hasErrors('name')}? 'error'" /></td>
+                    <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
+                </tr>
+                <tr>
+                    <td><label>Profile Photo</label></td>
+                    <td><input type="file" name="avatar" accept="image/jpeg,image/png,image/gif"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Register" /></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

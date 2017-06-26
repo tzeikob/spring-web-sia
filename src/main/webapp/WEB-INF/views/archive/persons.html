@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Persons Page</title>
+        <link rel="stylesheet"
+              type="text/css"
+              th:href="@{/assets/css/style.css}"/>
+    </head>
+    <body>
+        <span sec:authorize="isAuthenticated()">
+            <span>Hi there, <span sec:authentication="name">username</span>!</span>
+            &nbsp;
+        </span>
+        <a th:href="@{/}">Home</a>&nbsp;
+        <span sec:authorize-url="/a/register">
+            <a th:href="@{/a/register}">Registration</a>&nbsp;
+        </span>
+        <span sec:authorize-url="/c/dokuments">
+            <a th:href="@{/c/dokuments}">Dokuments</a>&nbsp;
+        </span>
+        <span sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Logout</a>
+        </span>
+
+        <h1>List of Persons</h1>
+        <table th:unless="${#lists.isEmpty(persons)}">
+            <th>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Items</td>
+                    <td>Actions</td>
+                </tr>
+            </th>
+            <tr th:each="person : ${persons}">
+                <td th:text="${person.id}">ID</td>
+                <td>
+                    <a th:text="${person.name}"
+                       th:href="@{/a/persons/} + ${person.id}">Name</a>
+                </td>
+                <td th:text="${#lists.size(person.items)}">66</td>
+                <td>
+                    <a th:href="@{/a/delete/} + ${person.id}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

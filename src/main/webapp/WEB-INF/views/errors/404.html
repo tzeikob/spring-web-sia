@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{error.view.title}"/>
+        <link rel="stylesheet"
+              type="text/css"
+              th:href="@{/assets/css/style.css}"/>
+    </head>
+    <body>
+        <h1>Hey there, it seems that you're very very lost!</h1>
+        <h2>Please go to the <a th:href="@{/home}">Home</a> page.</h2>
+    </body>
+</html>
